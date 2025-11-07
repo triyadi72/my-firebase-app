@@ -1,7 +1,7 @@
 {
   "hosting": {
     "site": "assetcgi",
-    "public": "public",
+    "public": "out",
     "ignore": [
       "firebase.json",
       "**/.*",
