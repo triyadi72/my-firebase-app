@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v4
 
       # Jalankan build jika ada script build di package.json
-      - run: npm ci && npm run build
+      # - run: npm ci && npm run build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
