@@ -8,14 +8,12 @@ on:
       - main
 
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      # Jalankan build jika ada script build di package.json
-      # - run: npm ci && npm run build
-
+      # Tidak ada build step, langsung deploy
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
