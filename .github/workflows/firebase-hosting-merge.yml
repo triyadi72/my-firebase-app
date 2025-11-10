@@ -1,13 +1,13 @@
-# Deploy Next.js static export to Firebase Hosting
-name: Deploy Next.js to Firebase Hosting
+# Deploy preview for Pull Requests
+name: Firebase Hosting Preview (Next.js)
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
 jobs:
-  build_and_deploy:
+  build_and_preview:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js (gunakan versi LTS terbaru)
+      # 2️⃣ Setup Node.js (gunakan versi LTS)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -26,16 +26,15 @@ jobs:
         working-directory: ./my-next-app
         run: npm install
 
-      # 4️⃣ Build Next.js app (auto static export karena output: "export")
+      # 4️⃣ Build Next.js app (static export)
       - name: Build Next.js app
         working-directory: ./my-next-app
         run: npm run build
 
-      # 5️⃣ Deploy to Firebase Hosting
-      - name: Deploy to Firebase Hosting
+      # 5️⃣ Deploy ke Firebase Hosting preview channel
+      - name: Deploy Preview to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LOGIN_604D8 }}
-          channelId: live
           projectId: login-604d8
