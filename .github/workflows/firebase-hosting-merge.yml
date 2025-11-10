@@ -1,4 +1,5 @@
-name: Deploy to Firebase Hosting on merge
+# Deploy Next.js static export to Firebase Hosting
+name: Deploy Next.js to Firebase Hosting
 
 on:
   push:
@@ -6,20 +7,35 @@ on:
       - main
 
 jobs:
-  deploy:
+  build_and_deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      # 1️⃣ Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node.js (gunakan versi LTS terbaru)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3️⃣ Install dependencies
       - name: Install dependencies
-        run: npm ci
+        working-directory: ./my-next-app
+        run: npm install
 
-      - name: Build Next.js (static export)
+      # 4️⃣ Build Next.js app (auto static export karena output: "export")
+      - name: Build Next.js app
+        working-directory: ./my-next-app
         run: npm run build
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      # 5️⃣ Deploy to Firebase Hosting
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LOGIN_604D8 }}
           channelId: live
           projectId: login-604d8
